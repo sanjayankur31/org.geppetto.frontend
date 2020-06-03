@@ -388,6 +388,7 @@ define(function (require) {
         activeExperiment : function(e){
             var experiment = this.props.experiment;
             var index = window.Project.getExperiments().indexOf(experiment);
+            // Sets active experiment here without checking whether the user is logged in
             GEPPETTO.CommandController.execute("Project.getExperiments()[" + index + "].setActive();", true);
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
@@ -395,6 +396,7 @@ define(function (require) {
             var login = GEPPETTO.UserController.isLoggedIn();
             if(login){
                 GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.LOADING_EXPERIMENT);
+                GEPPETTO.ModalFactory.infoDialog("Ankur", "Active project changed");
             }else{
         		GEPPETTO.ModalFactory.infoDialog(GEPPETTO.Resources.ERROR,
         				GEPPETTO.Resources.OPERATION_NOT_SUPPORTED + GEPPETTO.Resources.USER_NOT_LOGIN);
